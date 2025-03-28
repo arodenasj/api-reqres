@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 64px);
+    padding: 20px;
+  }
+
+  .error-content {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .error-icon {
+    font-size: 64px;
+    height: 64px !important;
+    width: 64px !important;
+    color: #f44336;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin: 0;
+    color: #333;
+  }
+
+  h2 {
+    margin: 1rem 0;
+    color: #666;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  button mat-icon {
+    margin-right: 8px;
+  }

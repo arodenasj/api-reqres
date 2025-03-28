@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+      <button mat-button routerLink="/" routerLinkActive="active">
+        <mat-icon>home</mat-icon>
+        Dashboard
+      </button>
+      <button mat-button routerLink="/users" routerLinkActive="active">
+        <mat-icon>people</mat-icon>
+        Usuarios
+      </button>
+      <button mat-button routerLink="/resources" routerLinkActive="active">
+        <mat-icon>folder</mat-icon>
+        Recursos
+      </button>
+      <span class="spacer"></span>
+      <button mat-icon-button *ngIf="authService.isAuthenticated()"
+              (click)="logout()"
+              matTooltip="Cerrar sesión">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
