@@ -6,3 +6,20 @@ mat-toolbar {
   right: 0;
   z-index: 1000;
 }
+
+/* Para los tres componentes */
+@media screen and (max-width: 600px) {
+  mat-toolbar {
+    padding: 0 8px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  button mat-icon {
+    margin-right: 4px;
+  }
+}

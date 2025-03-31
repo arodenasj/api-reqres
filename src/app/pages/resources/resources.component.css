@@ -14,9 +14,23 @@ mat-form-field {
   border-radius: 4px;
   margin-right: 8px;
   vertical-align: middle;
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 td.mat-cell {
   padding: 16px 8px;
+}
+
+@media screen and (max-width: 600px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .mat-cell:first-of-type {
+    padding-left: 12px;
+  }
+
+  .mat-cell:last-of-type {
+    padding-right: 12px;
+  }
 }

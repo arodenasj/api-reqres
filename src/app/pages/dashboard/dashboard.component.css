@@ -8,15 +8,26 @@
 
 .summary-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
   margin-bottom: 24px;
+}
+
+@media screen and (max-width: 600px) {
+  .dashboard-container {
+    padding: 8px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
 }
 
 mat-card {
   padding: 24px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   transition: transform 0.2s ease;
 }
 
@@ -29,11 +40,6 @@ mat-card-subtitle {
   margin-bottom: 16px;
 }
 
-table {
-  width: 100%;
-  margin-top: 16px;
-}
-
 .color-box {
   display: inline-block;
   width: 24px;
@@ -41,7 +47,7 @@ table {
   border-radius: 4px;
   margin-right: 8px;
   vertical-align: middle;
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .loading-container {
@@ -64,5 +70,5 @@ td.mat-cell {
 }
 
 tr.mat-row:hover {
-  background: rgba(0,0,0,0.04);
+  background: rgba(0, 0, 0, 0.04);
 }
