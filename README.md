@@ -2,7 +2,7 @@
 
 Aplicación web desarrollada con Angular que consume la [ReqRes API](https://reqres.in/) para demostrar operaciones CRUD básicas y gestión de usuarios.
 
-🔗 [Ver Demo en Netlify](https://reqres-angular-demo.netlify.app)
+🔗 [Ver Demo en Netlify](https://api-reqres.netlify.app/)
 
 ## Características
 
