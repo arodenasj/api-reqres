@@ -12,9 +12,10 @@
         Recursos
       </button>
       <span class="spacer"></span>
+
       <button mat-icon-button *ngIf="authService.isAuthenticated()"
               (click)="logout()"
               matTooltip="Cerrar sesión">
-        <mat-icon>logout</mat-icon>
-      </button>Logout
+         <mat-icon>logout</mat-icon>
+      </button>
     </mat-toolbar>
