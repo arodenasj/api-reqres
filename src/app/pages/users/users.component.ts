@@ -35,7 +35,7 @@ import {ConfirmDialogComponent} from '../../components/confirm-dialog/confirm-di
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['id', 'email', 'first_name', 'last_name', 'avatar', 'actions'];
+  displayedColumns: string[] = ['id',  'avatar', 'first_name', 'last_name','email', 'actions'];
   loading = true;
   searchTerm = '';
 

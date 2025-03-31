@@ -5,11 +5,13 @@
   min-width: 400px;
   padding: 16px 0;
 }
+
 .name-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+
 mat-form-field {
   width: 100%;
 }

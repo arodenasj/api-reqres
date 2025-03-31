@@ -1,1 +1,42 @@
-<p>resources-form works!</p>
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Nombre de recurso">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Nombre es obligatorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Año</mat-label>
+      <input matInput formControlName="year" type="number" placeholder="2024">
+      <mat-error *ngIf="form.get('year')?.hasError('required')">Año es obligatorio</mat-error>
+      <mat-error *ngIf="form.get('year')?.hasError('min')">Debe ser después 1900</mat-error>
+      <mat-error *ngIf="form.get('year')?.hasError('max')">No debe superar el año actual</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Color</mat-label>
+      <input matInput formControlName="color" type="color">
+      <mat-error *ngIf="form.get('color')?.hasError('required')">Elegir color</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Pantone Value (Opcional)</mat-label>
+      <input matInput formControlName="pantone_value" placeholder="15-4020">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()" [disabled]="loading">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="form.invalid || loading"
+  >
+    <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+    <span *ngIf="!loading">{{ mode === 'create' ? 'Crear' : 'Actualizar' }}</span>
+  </button>
+</mat-dialog-actions>
