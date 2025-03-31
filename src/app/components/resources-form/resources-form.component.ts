@@ -83,23 +83,23 @@ export class ResourceFormDialogComponent implements OnInit {
     if (this.mode === 'create') {
       this.apiService.createResource(this.form.value).subscribe({
         next: () => {
-          this.snackBar.open('Resource created successfully', 'Close', {duration: 3000});
+          this.snackBar.open('Recurso creado correctamente', 'Cerrar', {duration: 3000});
           this.dialogRef.close(true);
         },
         error: (error) => {
           this.loading = false;
-          this.snackBar.open('Failed to create resource', 'Close', {duration: 5000});
+          this.snackBar.open('Error al crear el recurso', 'Cerrar', {duration: 5000});
         }
       });
     } else if (this.mode === 'edit' && this.data.resource) {
       this.apiService.updateResource(Number(this.data.resource.id), this.form.value).subscribe({
         next: () => {
-          this.snackBar.open('Resource updated successfully', 'Close', {duration: 3000});
+          this.snackBar.open('Recurso actualizado correctamente', 'Cerrar', {duration: 3000});
           this.dialogRef.close(true);
         },
         error: (error) => {
           this.loading = false;
-          this.snackBar.open('Failed to update resource', 'Close', {duration: 5000});
+          this.snackBar.open('Error al actualizar el recurso', 'Cerrar', {duration: 5000});
         }
       });
     }

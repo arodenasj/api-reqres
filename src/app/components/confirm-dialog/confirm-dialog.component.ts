@@ -10,6 +10,7 @@ import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-confirm-dialog',
+  standalone: true,
   templateUrl: './confirm-dialog.component.html',
   imports: [
     MatDialogContent,

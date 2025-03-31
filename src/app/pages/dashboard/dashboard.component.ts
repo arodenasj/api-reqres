@@ -20,6 +20,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   templateUrl: './dashboard.component.html',
   imports: [
     NgIf,
