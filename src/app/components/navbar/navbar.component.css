@@ -8,9 +8,13 @@ mat-toolbar {
 }
 
 .active {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 button mat-icon {
   margin-right: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
