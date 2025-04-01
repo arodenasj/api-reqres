@@ -35,15 +35,20 @@ import {ConfirmDialogComponent} from '../../components/confirm-dialog/confirm-di
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['id',  'avatar', 'first_name', 'last_name','email', 'actions'];
+  displayedColumns: string[] = ['id', 'avatar', 'first_name', 'last_name', 'email', 'actions'];
   loading = true;
   searchTerm = '';
+  currentPage = 1;
+  totalPages = 0;
+  pageToGo = 1;
+
 
   constructor(
     private apiService: ApiService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -51,10 +56,11 @@ export class UsersComponent implements OnInit {
 
   loadUsers(): void {
     this.loading = true;
-    this.apiService.getUsers().subscribe({
+    this.apiService.getUsers(this.currentPage).subscribe({
       next: (response) => {
         this.users = response.data;
         this.filteredUsers = [...this.users];
+        this.totalPages = response.total_pages;
         this.loading = false;
       },
       error: () => {
@@ -62,6 +68,34 @@ export class UsersComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  goToPage(): void {
+    if (this.pageToGo >= 1) {
+      this.currentPage = this.pageToGo;
+      this.apiService.getUsers(this.pageToGo).subscribe({
+        next: (response) => {
+          this.users = response.data;
+          this.filteredUsers = [...this.users];
+          this.totalPages = response.total_pages;
+          this.currentPage = response.page;
+        },
+        error: () => {
+          this.snackBar.open('Error al cargar usuarios', 'Cerrar', {duration: 5000});
+        }
+      });
+    } else {
+      this.snackBar.open('Por favor ingrese un número mayor o igual a 1', 'Cerrar', {
+        duration: 3000
+      });
+    }
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadUsers();
+    }
   }
 
   applyFilter(): void {

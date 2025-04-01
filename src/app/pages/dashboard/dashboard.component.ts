@@ -3,41 +3,31 @@ import {ApiService} from '../../services/api.service';
 import {User} from '../../models/user';
 import {Resources} from '../../models/resources';
 import {NgIf} from '@angular/common';
-import {MatCard, MatCardSubtitle} from '@angular/material/card';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable
-} from '@angular/material/table';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {forkJoin} from 'rxjs';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  templateUrl: './dashboard.component.html',
   imports: [
     NgIf,
-    MatProgressSpinner,
-    MatCard,
-    MatCardSubtitle,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatHeaderCellDef,
-    MatCell,
-    MatCellDef,
-    MatHeaderRow,
-    MatRow,
-    MatRowDef,
-    MatHeaderRowDef
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule
   ],
+  templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
@@ -45,6 +35,20 @@ export class DashboardComponent implements OnInit {
   error: string | null = null;
   recentUsers: User[] = [];
   recentResources: Resources[] = [];
+  userPage = 1;
+  resourcePage = 1;
+  userTotalPages = 0;
+  resourceTotalPages = 0;
+  userPageToGo = 1;
+  resourcePageToGo = 1;
+
+  // Definir columnas para las tablas
+  userColumns: string[] = ['id', 'email', 'name'];
+  resourceColumns: string[] = ['id', 'name', 'color'];
+
+  // Agregar fuentes de datos para las tablas
+  userDataSource = new MatTableDataSource<User>();
+  resourceDataSource = new MatTableDataSource<Resources>();
 
   constructor(private apiService: ApiService) {
   }
@@ -53,13 +57,25 @@ export class DashboardComponent implements OnInit {
     this.loadDashboardData();
   }
 
-  private loadDashboardData(): void {
+  loadDashboardData(): void {
     this.loading = true;
+    this.error = null;
 
-    // Cargar usuarios
-    this.apiService.getUsers().subscribe({
+    forkJoin({
+      users: this.apiService.getUsers(this.userPage),
+      resources: this.apiService.getResources(this.resourcePage)
+    }).subscribe({
       next: (response) => {
-        this.recentUsers = response.data; // Mostrar todos los usuarios
+        this.recentUsers = response.users.data;
+        this.userDataSource.data = this.recentUsers;
+        this.userTotalPages = response.users.total_pages;
+        this.userPage = response.users.page;
+
+        this.recentResources = response.resources.data;
+        this.resourceDataSource.data = this.recentResources;
+        this.resourceTotalPages = response.resources.total_pages;
+        this.resourcePage = response.resources.page;
+
         this.loading = false;
       },
       error: (error) => {
@@ -67,17 +83,53 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
 
-    // Cargar recursos
-    this.apiService.getResources().subscribe({
-      next: (response) => {
-        this.recentResources = response.data; // Mostrar todos los recursos
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = error.message;
-        this.loading = false;
-      }
-    });
+  changeUserPage(page: number): void {
+    if (page >= 1 && page <= this.userTotalPages) {
+      this.userPage = page;
+      this.userPageToGo = page;
+      this.apiService.getUsers(page).subscribe({
+        next: (response) => {
+          this.recentUsers = response.data;
+          this.userDataSource.data = this.recentUsers; // Actualizar dataSource
+          this.userTotalPages = response.total_pages;
+          this.userPage = response.page;
+        },
+        error: (error) => {
+          this.error = error.message;
+        }
+      });
+    }
+  }
+
+  changeResourcePage(page: number): void {
+    if (page >= 1 && page <= this.resourceTotalPages) {
+      this.resourcePage = page;
+      this.resourcePageToGo = page;
+      this.apiService.getResources(page).subscribe({
+        next: (response) => {
+          this.recentResources = response.data;
+          this.resourceDataSource.data = this.recentResources; // Actualizar dataSource
+          this.resourceTotalPages = response.total_pages;
+          this.resourcePage = response.page;
+        },
+        error: (error) => {
+          this.error = error.message;
+        }
+      });
+    }
+  }
+
+  goToUserPage(): void {
+    if (this.userPageToGo >= 1) {
+      this.changeUserPage(this.userPageToGo);
+    }
+  }
+
+  goToResourcePage(): void {
+    if (this.resourcePageToGo >= 1) {
+      this.changeResourcePage(this.resourcePageToGo);
+    }
   }
 }

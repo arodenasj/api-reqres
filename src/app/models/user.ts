@@ -5,3 +5,11 @@ export interface User {
   last_name: string;
   avatar?: string;
 }
+
+export interface UserResponse {
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+  data: User[];
+}

@@ -21,6 +21,31 @@ td.mat-cell {
   padding: 16px 8px;
 }
 
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.pagination-controls span {
+  margin: 0 8px;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.pagination-controls button[mat-icon-button] {
+  margin: 0;
+}
+
+.loading-container {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 600px) {
   .hide-mobile {
     display: none !important;

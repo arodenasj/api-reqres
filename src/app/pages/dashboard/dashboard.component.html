@@ -1,7 +1,7 @@
 <div class="dashboard-container">
   <h1>Dashboard</h1>
 
-  <div *ngIf="loading">
+  <div class="loading-container" *ngIf="loading">
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 
@@ -11,58 +11,99 @@
 
   <div *ngIf="!loading && !error" class="dashboard-content">
     <div class="summary-cards">
+      <!-- Usuarios -->
       <mat-card>
         <mat-card-subtitle>Usuarios</mat-card-subtitle>
-        <div class="recent-tables">
-          <div class="recent-section">
-            <table mat-table [dataSource]="recentUsers" class="mat-elevation-z2">
-              <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef>ID</th>
-                <td mat-cell *matCellDef="let user">{{ user.id }}</td>
-              </ng-container>
+        <table mat-table [dataSource]="recentUsers" class="mat-elevation-z2">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+          </ng-container>
 
-              <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef>Email</th>
-                <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-              </ng-container>
 
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Nombre</th>
-                <td mat-cell *matCellDef="let user">{{ user.first_name }} {{ user.last_name }}</td>
-              </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+          </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="['id', 'email', 'name']"></tr>
-              <tr mat-row *matRowDef="let row; columns: ['id', 'email', 'name']"></tr>
-            </table>
-          </div>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let user">{{ user.first_name }} {{ user.last_name }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: userColumns"></tr>
+          <!-- Mensaje de no datos -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="userColumns.length">
+              No hay usuarios disponibles
+            </td>
+          </tr>
+        </table>
+
+        <div class="pagination-controls">
+          <mat-form-field>
+            <mat-label>Ir a página</mat-label>
+            <input matInput type="number" [(ngModel)]="userPageToGo" [min]="1">
+          </mat-form-field>
+          <button mat-button color="primary" (click)="goToUserPage()">Ir a página</button>
+          <button mat-icon-button [disabled]="userPage === 1" (click)="changeUserPage(userPage - 1)">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <span>Página {{ userPage }} de {{ userTotalPages }}</span>
+          <button mat-icon-button [disabled]="userPage === userTotalPages" (click)="changeUserPage(userPage + 1)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
         </div>
       </mat-card>
 
+      <!-- Recursos -->
       <mat-card>
-        <div class="recent-section">
-          <mat-card-subtitle>Recursos</mat-card-subtitle>
-          <table mat-table [dataSource]="recentResources" class="mat-elevation-z2">
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef>ID</th>
-              <td mat-cell *matCellDef="let resource">{{ resource.id }}</td>
-            </ng-container>
+        <mat-card-subtitle>Recursos</mat-card-subtitle>
+        <table mat-table [dataSource]="recentResources" class="mat-elevation-z2">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let resource">{{ resource.id }}</td>
+          </ng-container>
 
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>Nombre</th>
-              <td mat-cell *matCellDef="let resource">{{ resource.name }}</td>
-            </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let resource">{{ resource.name }}</td>
+          </ng-container>
 
-            <ng-container matColumnDef="color">
-              <th mat-header-cell *matHeaderCellDef>Color</th>
-              <td mat-cell *matCellDef="let resource">
-                <div class="color-box" [style.background-color]="resource.color"></div>
-                {{ resource.color }}
-              </td>
-            </ng-container>
+          <ng-container matColumnDef="color">
+            <th mat-header-cell *matHeaderCellDef>Color</th>
+            <td mat-cell *matCellDef="let resource">
+              <div class="color-box" [style.background-color]="resource.color"></div>
+              {{ resource.color }}
+            </td>
+          </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="['id', 'name', 'color']"></tr>
-            <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'color']"></tr>
-          </table>
+          <tr mat-header-row *matHeaderRowDef="resourceColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: resourceColumns"></tr>
+
+          <!-- Mensaje de no datos -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="resourceColumns.length">
+              No hay recursos disponibles
+            </td>
+          </tr>
+        </table>
+
+        <div class="pagination-controls">
+          <mat-form-field>
+            <mat-label>Ir a página</mat-label>
+            <input matInput type="number" [(ngModel)]="resourcePageToGo" [min]="1">
+          </mat-form-field>
+          <button mat-button color="primary" (click)="goToResourcePage()">Ir a página</button>
+          <button mat-icon-button [disabled]="resourcePage === 1" (click)="changeResourcePage(resourcePage - 1)">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <span>Página {{ resourcePage }} de {{ resourceTotalPages }}</span>
+          <button mat-icon-button [disabled]="resourcePage === resourceTotalPages"
+                  (click)="changeResourcePage(resourcePage + 1)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
         </div>
       </mat-card>
     </div>
