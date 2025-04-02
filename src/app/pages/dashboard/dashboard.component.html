@@ -14,7 +14,7 @@
       <!-- Usuarios -->
       <mat-card>
         <mat-card-subtitle>Usuarios</mat-card-subtitle>
-        <table mat-table [dataSource]="recentUsers" class="mat-elevation-z2">
+        <table mat-table [dataSource]="userDataSource" class="mat-elevation-z2">
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let user">{{ user.id }}</td>
@@ -60,7 +60,7 @@
       <!-- Recursos -->
       <mat-card>
         <mat-card-subtitle>Recursos</mat-card-subtitle>
-        <table mat-table [dataSource]="recentResources" class="mat-elevation-z2">
+        <table mat-table [dataSource]="resourceDataSource" class="mat-elevation-z2">
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let resource">{{ resource.id }}</td>
