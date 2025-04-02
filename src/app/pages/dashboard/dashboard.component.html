@@ -16,14 +16,14 @@
         <mat-card-subtitle>Usuarios</mat-card-subtitle>
         <table mat-table [dataSource]="userDataSource" class="mat-elevation-z2">
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+            <th mat-header-cell *matHeaderCellDef class="hide-mobile">ID</th>
+            <td mat-cell *matCellDef="let user" class="hide-mobile">{{ user.id }}</td>
           </ng-container>
 
 
           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
-            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+            <th mat-header-cell *matHeaderCellDef class="hide-mobile">Email</th>
+            <td mat-cell *matCellDef="let user" class="hide-mobile">{{ user.email }}</td>
           </ng-container>
 
           <ng-container matColumnDef="name">
@@ -62,8 +62,8 @@
         <mat-card-subtitle>Recursos</mat-card-subtitle>
         <table mat-table [dataSource]="resourceDataSource" class="mat-elevation-z2">
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let resource">{{ resource.id }}</td>
+            <th mat-header-cell *matHeaderCellDef class="hide-mobile">ID</th>
+            <td mat-cell *matCellDef="let resource" class="hide-mobile">{{ resource.id }}</td>
           </ng-container>
 
           <ng-container matColumnDef="name">

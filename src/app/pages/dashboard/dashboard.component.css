@@ -12,6 +12,7 @@
   gap: 16px;
   margin-bottom: 24px;
 }
+
 .pagination-controls {
   display: flex;
   align-items: center;
@@ -36,6 +37,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .mat-mdc-no-data-row td {
   text-align: center;
   padding: 14px;
