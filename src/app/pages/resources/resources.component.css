@@ -21,6 +21,13 @@ td.mat-cell {
   padding: 16px 8px;
 }
 
+.mat-mdc-no-data-row td {
+  text-align: center;
+  padding: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
 .pagination-controls {
   display: flex;
   align-items: center;

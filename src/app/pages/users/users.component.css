@@ -34,6 +34,13 @@ tr.mat-row:hover {
   background: rgba(0, 0, 0, 0.04);
 }
 
+.mat-mdc-no-data-row td {
+  text-align: center;
+  padding: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
 .pagination-controls {
   display: flex;
   align-items: center;
