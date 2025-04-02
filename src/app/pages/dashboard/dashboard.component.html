@@ -15,24 +15,27 @@
       <mat-card>
         <mat-card-subtitle>Usuarios</mat-card-subtitle>
         <table mat-table [dataSource]="userDataSource" class="mat-elevation-z2">
+          <!-- ID Column -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef class="hide-mobile">ID</th>
             <td mat-cell *matCellDef="let user" class="hide-mobile">{{ user.id }}</td>
           </ng-container>
 
-
+          <!-- Email Column -->
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef class="hide-mobile">Email</th>
             <td mat-cell *matCellDef="let user" class="hide-mobile">{{ user.email }}</td>
           </ng-container>
 
+          <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Nombre</th>
             <td mat-cell *matCellDef="let user">{{ user.first_name }} {{ user.last_name }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: userColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+
           <!-- Mensaje de no datos -->
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" [attr.colspan]="userColumns.length">
@@ -44,16 +47,21 @@
         <div class="pagination-controls">
           <mat-form-field>
             <mat-label>Ir a página</mat-label>
-            <input matInput type="number" [(ngModel)]="userPageToGo" [min]="1">
+            <input matInput
+                   type="number"
+                   [(ngModel)]="userPageToGo"
+                   [min]="1">
           </mat-form-field>
           <button mat-button color="primary" (click)="goToUserPage()">Ir a página</button>
-          <button mat-icon-button [disabled]="userPage === 1" (click)="changeUserPage(userPage - 1)">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <span>Página {{ userPage }} de {{ userTotalPages }}</span>
-          <button mat-icon-button [disabled]="userPage === userTotalPages" (click)="changeUserPage(userPage + 1)">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
+          <div class="pagination-buttons">
+            <button mat-icon-button [disabled]="userPage === 1" (click)="changeUserPage(userPage - 1)">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span>Página {{ userPage }} de {{ userTotalPages }}</span>
+            <button mat-icon-button [disabled]="userPage === userTotalPages" (click)="changeUserPage(userPage + 1)">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
         </div>
       </mat-card>
 
@@ -80,7 +88,7 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="resourceColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: resourceColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: resourceColumns;"></tr>
 
           <!-- Mensaje de no datos -->
           <tr class="mat-row" *matNoDataRow>
@@ -93,17 +101,22 @@
         <div class="pagination-controls">
           <mat-form-field>
             <mat-label>Ir a página</mat-label>
-            <input matInput type="number" [(ngModel)]="resourcePageToGo" [min]="1">
+            <input matInput
+                   type="number"
+                   [(ngModel)]="resourcePageToGo"
+                   [min]="1">
           </mat-form-field>
           <button mat-button color="primary" (click)="goToResourcePage()">Ir a página</button>
-          <button mat-icon-button [disabled]="resourcePage === 1" (click)="changeResourcePage(resourcePage - 1)">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <span>Página {{ resourcePage }} de {{ resourceTotalPages }}</span>
-          <button mat-icon-button [disabled]="resourcePage === resourceTotalPages"
-                  (click)="changeResourcePage(resourcePage + 1)">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
+          <div class="pagination-buttons">
+            <button mat-icon-button [disabled]="resourcePage === 1" (click)="changeResourcePage(resourcePage - 1)">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span>Página {{ resourcePage }} de {{ resourceTotalPages }}</span>
+            <button mat-icon-button [disabled]="resourcePage === resourceTotalPages"
+                    (click)="changeResourcePage(resourcePage + 1)">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
         </div>
       </mat-card>
     </div>

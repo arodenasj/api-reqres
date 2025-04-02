@@ -87,12 +87,14 @@
              [min]="1">
     </mat-form-field>
     <button mat-button color="primary" (click)="goToPage()">Ir a página</button>
-    <button mat-icon-button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <span>Página {{ currentPage }} de {{ totalPages }}</span>
-    <button mat-icon-button [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
+    <div class="pagination-buttons">
+      <button mat-icon-button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button mat-icon-button [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
   </div>
 </mat-card>

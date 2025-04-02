@@ -16,14 +16,22 @@
 .pagination-controls {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px; /* Reducir el gap para pantallas más pequeñas */
   margin-top: 16px;
-  padding: 16px;
+  padding: 8px; /* Reducir el padding para pantallas más pequeñas */
   border-top: 1px solid rgba(0, 0, 0, 0.12);
+  flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+  justify-content: center; /* Centrar los elementos */
+}
+
+.pagination-controls mat-form-field {
+  width: auto; /* Ancho automático */
+  flex-grow: 1; /* Permitir que el campo crezca para llenar el espacio disponible */
+  max-width: 75px; /* Ancho máximo para evitar que se expanda demasiado */
 }
 
 .pagination-controls span {
-  margin: 0 8px;
+  margin: 0 4px; /* Reducir el margen */
   color: rgba(255, 255, 255, 0.87);
 }
 
@@ -57,6 +65,32 @@
   table {
     display: block;
     overflow-x: auto;
+  }
+
+  .pagination-controls {
+    padding: 8px;
+    gap: 4px; /* Reducir aún más el gap en pantallas muy pequeñas */
+    flex-direction: column; /* Apilar los elementos verticalmente */
+    align-items: center; /* Centrar los elementos horizontalmente */
+  }
+
+  .pagination-controls mat-form-field {
+    max-width: 60px; /* Reducir el ancho máximo en pantallas muy pequeñas */
+    margin-bottom: 8px; /* Añadir un margen inferior para separar los elementos */
+  }
+
+  .pagination-controls span {
+    font-size: 0.8em; /* Reducir el tamaño de la fuente */
+  }
+
+  .pagination-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Asegurar que los botones ocupen todo el ancho */
+  }
+
+  .pagination-buttons button {
+    margin: 0 4px; /* Espacio entre los botones */
   }
 }
 
