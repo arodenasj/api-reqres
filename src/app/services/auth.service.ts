@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { ApiService } from './api.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {ApiService} from './api.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {LoginCredentials, RegisterCredentials} from '../models/auth';
 
 @Injectable({
@@ -31,8 +31,12 @@ export class AuthService {
       tap(response => {
         localStorage.setItem('auth_token', response.token);
         this.authenticatedSubject.next(true);
-        this.snackBar.open('Login successful', 'Close', { duration: 3000 });
+        this.snackBar.open('Login successful', 'Close', {duration: 3000});
         this.router.navigate(['/dashboard']);
+      }),
+      catchError(error => {
+        this.snackBar.open('Login failed', 'Close', {duration: 3000});
+        return throwError(() => error);
       })
     );
   }
@@ -42,8 +46,12 @@ export class AuthService {
       tap(response => {
         localStorage.setItem('auth_token', response.token);
         this.authenticatedSubject.next(true);
-        this.snackBar.open('Registration successful', 'Close', { duration: 3000 });
+        this.snackBar.open('Registration successful', 'Close', {duration: 3000});
         this.router.navigate(['/dashboard']);
+      }),
+      catchError(error => {
+        this.snackBar.open('Registration failed', 'Close', {duration: 3000});
+        return throwError(() => error);
       })
     );
   }
@@ -52,7 +60,7 @@ export class AuthService {
     localStorage.removeItem('auth_token');
     this.authenticatedSubject.next(false);
     this.router.navigate(['/']);
-    this.snackBar.open('Logged out successfully', 'Close', { duration: 3000 });
+    this.snackBar.open('Logged out successfully', 'Close', {duration: 3000});
   }
 
   isAuthenticated(): boolean {

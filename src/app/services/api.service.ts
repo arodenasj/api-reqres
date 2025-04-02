@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthResponse, LoginCredentials, RegisterCredentials} from '../models/auth';
-import {catchError, forkJoin, map, Observable, of, switchMap, throwError} from 'rxjs';
+import {catchError, map, Observable, throwError} from 'rxjs';
 import {User, UserResponse} from '../models/user';
 import {ResourceResponse, Resources} from '../models/resources';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ import {ResourceResponse, Resources} from '../models/resources';
 export class ApiService {
   private apiUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
   }
 
 
@@ -66,11 +66,12 @@ export class ApiService {
   }
 
   // Métodos para recursos
-getResources(page: number = 1): Observable<ResourceResponse> {
-  return this.http.get<ResourceResponse>(`${this.apiUrl}/resources?page=${page}&per_page=6`).pipe(
-    catchError(this.handleError)
-  );
-}
+  getResources(page: number = 1): Observable<ResourceResponse> {
+    return this.http.get<ResourceResponse>(`${this.apiUrl}/resources?page=${page}&per_page=6`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getResource(id: number): Observable<Resources> {
     return this.http.get<{ data: Resources }>(`${this.apiUrl}/resources/${id}`).pipe(
       map(response => response.data),
@@ -107,6 +108,10 @@ getResources(page: number = 1): Observable<ResourceResponse> {
     } else {
       errorMessage = `Código de error: ${error.status}\nMensaje: ${error.message}`;
     }
+
+    this.snackBar.open(errorMessage, 'Close', {
+      duration: 5000,
+    });
 
     return throwError(() => new Error(errorMessage));
   }
